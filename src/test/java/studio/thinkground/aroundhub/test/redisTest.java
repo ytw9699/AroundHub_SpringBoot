@@ -23,6 +23,7 @@ public class redisTest {
     @Test
     public void insertAndReadStringInRedis() {
 
+        int LIMIT_TIME = 3 * 60;
         String key = "testStringKey";
         String value = "testStringValue";
 
@@ -30,6 +31,7 @@ public class redisTest {
                     redisTemplate.opsForValue();
 
         valueOperations.set(key, value);
+        //valueOperations.set(key,value,LIMIT_TIME);
 
         String resultValue = (String)redisTemplate.opsForValue().get(key);
 
@@ -44,6 +46,20 @@ public class redisTest {
         String value = "testStringValue";
 
         redisTemplate.opsForValue().set(key, value);
+
+        String resultValue = (String)redisTemplate.opsForValue().get(key);
+
+        assertThat(value).isEqualTo(resultValue);
+    }
+
+    @DisplayName("레디스 String 값 업데이트 테스트")
+    @Test
+    public void getAndSet() {
+
+        String key = "testStringKey";
+        String value = "testStringValue3";
+
+        redisTemplate.opsForValue().getAndSet(key, value);
 
         String resultValue = (String)redisTemplate.opsForValue().get(key);
 
